@@ -1,7 +1,7 @@
 import sql from '../config/db.js';
 
 export const buscarTodos = async () => {
-  return await sql`SELECT codigoCompra, descricaoCompra, timestampCompra, valorCompra, codigoCategoriaCompra FROM public.compra;`;
+  return await sql`SELECT codigo_compra, descricao_compra, timestamp_compra, valor, codigo_categoria_compra FROM public.compra;`;
 };
 
 export const inserir = async ({ nome, senha }) => {
