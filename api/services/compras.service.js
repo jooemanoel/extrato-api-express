@@ -8,16 +8,16 @@ export const listar = () => {
 
 export const inserir = ({
   descricao_compra,
-  timestamp_compra,
+  data_compra,
   valor_compra,
   codigo_categoria_compra,
 }) => {
-  if (!descricao_compra || !timestamp_compra || !valor_compra) {
+  if (!descricao_compra || !data_compra || !valor_compra) {
     throw new Error("Campos obrigatórios não informados");
   }
   return comprasDAO.inserir({
     descricao_compra,
-    timestamp_compra,
+    data_compra,
     valor_compra,
     codigo_categoria_compra,
   });
@@ -40,16 +40,16 @@ export const buscar = async (codigo_compra) => {
 export const editar = async (codigo_compra, dados) => {
   const {
     descricao_compra,
-    timestamp_compra,
+    data_compra,
     valor_compra,
     codigo_categoria_compra,
   } = dados;
-  if (!descricao_compra || !timestamp_compra || !valor_compra) {
+  if (!descricao_compra || !data_compra || !valor_compra) {
     throw new Error("Campos obrigatórios não informados");
   }
   const compra = await comprasDAO.editar(codigo_compra, {
     descricao_compra,
-    timestamp_compra,
+    data_compra,
     valor_compra,
     codigo_categoria_compra,
   });
