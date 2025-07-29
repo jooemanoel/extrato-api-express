@@ -1,7 +1,7 @@
 import sql from "../config/db.js";
 
 export const listar = async () => {
-  return await sql`SELECT codigo_compra, descricao_compra, data_compra, valor_compra, codigo_categoria_compra FROM public.compra;`;
+  return await sql`SELECT codigo_compra, descricao_compra, data_compra, valor_compra, codigo_categoria_compra FROM public.compra ORDER BY data_compra DESC;`;
 };
 
 export const inserir = async ({
