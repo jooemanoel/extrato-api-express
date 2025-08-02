@@ -7,7 +7,7 @@ export const listar = async (req, res) => {
     const fatura = await faturaService.listar();
     res.json(fatura);
   } catch (err) {
-    console.error('Erro ao buscar faturas:', err);
-    res.status(500).json({ erro: 'Erro ao buscar faturas.', detalhes: err.message });
+    console.log('Erro ao buscar faturas:', err);
+    res.status(500).json({ message: 'Erro ao buscar faturas.', detalhes: err.message });
   }
 };

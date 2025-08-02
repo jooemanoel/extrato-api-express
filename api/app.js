@@ -6,6 +6,7 @@ import express from "express";
 import rootRoutes from "./routes/root.routes.js";
 import comprasRoutes from "./routes/compras.routes.js";
 import faturaRoutes from "./routes/fatura.routes.js";
+import usuarioRoutes from "./routes/usuario.routes.js";
 
 export function createApp() {
   const app = express();
@@ -14,6 +15,7 @@ export function createApp() {
   app.use('/', rootRoutes);
   app.use('/compras', comprasRoutes);
   app.use('/faturas', faturaRoutes);
+  app.use('/usuario', usuarioRoutes);
   return app;
 }
 
