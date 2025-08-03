@@ -3,17 +3,17 @@
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
-import rootRoutes from "./routes/root.routes.js";
-import comprasRoutes from "./routes/compras.routes.js";
-import faturaRoutes from "./routes/fatura.routes.js";
-import usuarioRoutes from "./routes/usuario.routes.js";
+import rootRoutes from "./modules/root/root.routes.js";
+import compraRoutes from "./modules/compras/compra.routes.js";
+import faturaRoutes from "./modules/fatura/fatura.routes.js";
+import usuarioRoutes from "./modules/usuario/usuario.routes.js";
 
 export function createApp() {
   const app = express();
   app.use(express.json());
   app.use(cors());
   app.use('/', rootRoutes);
-  app.use('/compras', comprasRoutes);
+  app.use('/compras', compraRoutes);
   app.use('/faturas', faturaRoutes);
   app.use('/usuario', usuarioRoutes);
   return app;

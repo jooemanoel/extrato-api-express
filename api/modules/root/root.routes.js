@@ -1,4 +1,10 @@
-export const homepage = (req, res) => {
+// api/routes/root.routes.js
+
+import express from "express";
+
+const router = express.Router();
+
+router.get("/", (req, res) => {
   res.send(`
 <!DOCTYPE html>
 <html lang="en">
@@ -13,4 +19,6 @@ export const homepage = (req, res) => {
 </html>
 
   `);
-};
+});
+
+export default router;

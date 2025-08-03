@@ -1,11 +1,13 @@
-import sql from "../config/db.js";
+// api/modules/compras/compras.dao.js
+
+import sql from "../../config/db.js";
 
 export const listar = async (codigo_usuario) => {
   return await sql`
-  SELECT codigo_compra, descricao_compra, data_compra, valor_compra, codigo_categoria_compra 
-  FROM public.compra 
-  WHERE codigo_usuario = ${codigo_usuario} 
-  ORDER BY data_compra DESC, descricao_compra DESC;`;
+    SELECT codigo_compra, descricao_compra, data_compra, valor_compra, codigo_categoria_compra 
+    FROM public.compra 
+    WHERE codigo_usuario = ${codigo_usuario} 
+    ORDER BY data_compra DESC, descricao_compra DESC;`;
 };
 
 export const inserir = async ({
@@ -30,14 +32,6 @@ export const inserir = async ({
   return compra;
 };
 
-export const apagar = async (codigo_compra) => {
-  const [compra] = await sql`
-    DELETE FROM compra
-    WHERE codigo_compra = ${codigo_compra}
-    RETURNING codigo_compra, descricao_compra`;
-  return compra; // pode ser undefined se não existir
-};
-
 export const editar = async (codigo_compra, {
   descricao_compra,
   data_compra,
@@ -53,5 +47,13 @@ export const editar = async (codigo_compra, {
     WHERE codigo_compra = ${codigo_compra}
     RETURNING codigo_compra, descricao_compra, data_compra, valor_compra, codigo_categoria_compra;
   `;
-  return compra; // pode ser undefined se não existir
+  return compra;
+};
+
+export const apagar = async (codigo_compra) => {
+  const [compra] = await sql`
+    DELETE FROM compra
+    WHERE codigo_compra = ${codigo_compra}
+    RETURNING codigo_compra, descricao_compra`;
+  return compra;
 };

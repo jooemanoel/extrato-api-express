@@ -1,9 +1,9 @@
-// api/services/usuario.service.js
+// api/modules/usuario/usuario.service.js
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import * as usuarioDAO from "../dao/usuario.dao.js";
+import * as usuarioDAO from "./usuario.dao.js";
 
 export const inserir = async ({ nome_usuario, senha_usuario }) => {
   if (!nome_usuario || !senha_usuario) {

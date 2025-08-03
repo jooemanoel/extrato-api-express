@@ -1,6 +1,6 @@
-// api/dao/usuario.dao.js
+// api/modules/usuario/usuario.dao.js
 
-import sql from "../config/db.js";
+import sql from "../../config/db.js";
 
 export const inserir = async ({ nome_usuario, senha_usuario }) => {
   const [usuario] = await sql`
