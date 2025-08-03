@@ -2,8 +2,8 @@
 
 import * as comprasDAO from "../dao/compras.dao.js";
 
-export const listar = () => {
-  return comprasDAO.listar();
+export const listar = (codigo_usuario) => {
+  return comprasDAO.listar(codigo_usuario);
 };
 
 export const inserir = ({
@@ -11,6 +11,7 @@ export const inserir = ({
   data_compra,
   valor_compra,
   codigo_categoria_compra,
+  codigo_usuario
 }) => {
   if (!descricao_compra || !data_compra || !valor_compra) {
     throw new Error("Campos obrigatórios não informados");
@@ -20,6 +21,7 @@ export const inserir = ({
     data_compra,
     valor_compra,
     codigo_categoria_compra,
+    codigo_usuario
   });
 };
 
@@ -31,10 +33,6 @@ export const apagar = async (codigo_compra) => {
     throw error;
   }
   return compra;
-};
-
-export const buscar = async (codigo_compra) => {
-  return await comprasDAO.buscar(codigo_compra);
 };
 
 export const editar = async (codigo_compra, dados) => {

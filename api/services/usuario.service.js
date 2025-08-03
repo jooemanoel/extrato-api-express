@@ -22,8 +22,8 @@ export const login = async ({ nome_usuario, senha_usuario }) => {
     error.status = 404;
     throw error;
   }
-  const senhaValida = await bcrypt.compare(senha_usuario, usuario.senha_usuario);
-  if (!senhaValida) {
+  const validarSenha = await bcrypt.compare(senha_usuario, usuario.senha_usuario);
+  if (!validarSenha) {
     const error = new Error("Senha inválida");
     error.status = 401;
     throw error;
