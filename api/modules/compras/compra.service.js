@@ -6,6 +6,15 @@ export const listar = (codigo_usuario) => {
   return compraDAO.listar(codigo_usuario);
 };
 
+export const listarPorData = (codigo_usuario, {data_abertura_fatura, data_fechamento_fatura}) => {
+  if(!data_abertura_fatura || !data_fechamento_fatura){
+    const error = new Error("Campos obrigatórios não informados");
+    error.status = 400;
+    throw error;
+  }
+  return compraDAO.listarPorData(codigo_usuario, data_abertura_fatura, data_fechamento_fatura);
+};
+
 export const inserir = ({
   descricao_compra,
   data_compra,
@@ -14,7 +23,9 @@ export const inserir = ({
   codigo_usuario
 }) => {
   if (!descricao_compra || !data_compra || !valor_compra) {
-    throw new Error("Campos obrigatórios não informados");
+    const error = new Error("Campos obrigatórios não informados");
+    error.status = 400;
+    throw error;
   }
   return compraDAO.inserir({
     descricao_compra,
@@ -33,7 +44,9 @@ export const editar = async (codigo_compra, dados) => {
     codigo_categoria_compra,
   } = dados;
   if (!descricao_compra || !data_compra || !valor_compra) {
-    throw new Error("Campos obrigatórios não informados");
+    const error = new Error("Campos obrigatórios não informados");
+    error.status = 400;
+    throw error;
   }
   const compra = await compraDAO.editar(codigo_compra, {
     descricao_compra,

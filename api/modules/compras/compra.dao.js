@@ -10,6 +10,15 @@ export const listar = async (codigo_usuario) => {
     ORDER BY data_compra DESC, descricao_compra DESC;`;
 };
 
+export const listarPorData = async (codigo_usuario, data_abertura_fatura, data_fechamento_fatura) => {
+  return await sql`
+    SELECT codigo_compra, descricao_compra, data_compra, valor_compra, codigo_categoria_compra 
+    FROM public.compra 
+    WHERE codigo_usuario = ${codigo_usuario} 
+    AND data_compra BETWEEN ${data_abertura_fatura} AND ${data_fechamento_fatura} 
+    ORDER BY data_compra DESC, descricao_compra DESC;`;
+};
+
 export const inserir = async ({
   descricao_compra,
   data_compra,
