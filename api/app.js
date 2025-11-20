@@ -17,7 +17,7 @@ export function createApp() {
   app.use('/compras', compraRoutes);
   app.use('/faturas', faturaRoutes);
   app.use('/usuario', usuarioRoutes);
-  // app.use('/ofx', ofxRoutes);
+  app.use('/ofx', ofxRoutes);
   return app;
 }
 
