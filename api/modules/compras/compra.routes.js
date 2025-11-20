@@ -20,7 +20,10 @@ router.get("/", async (req, res) => {
 router.post("/por-data", async (req, res) => {
   try {
     const codigo_usuario = req.usuario.codigo_usuario;
-    const compras = await compraService.listarPorData(codigo_usuario, req.body);
+    const compras = await compraService.listarPorData(
+      codigo_usuario, 
+      req.body
+    );
     res.json(compras);
   } catch (err) {
     res.status(err.status || 500).json({ message: err.message });
@@ -40,21 +43,21 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:codigo_compra", async (req, res) => {
+router.put("/:fitid", async (req, res) => {
   try {
-    const codigo_compra = parseInt(req.params.codigo_compra, 10);
-    const compra = await compraService.editar(codigo_compra, req.body);
+    const fitid = req.params.fitid;
+    const compra = await compraService.editar(fitid, req.body);
     res.json(compra);
   } catch (err) {
     res.status(err.status || 500).json({ message: err.message });
   }
 });
 
-router.delete("/:codigo_compra", async (req, res) => {
+router.delete("/:fitid", async (req, res) => {
   try {
-    const codigo_compra = parseInt(req.params.codigo_compra, 10);
-    const compra = await compraService.apagar(codigo_compra);
-    res.json({ mensagem: "Compra apagada com sucesso", compra: compra });
+    const fitid = req.params.fitid;
+    const compra = await compraService.apagar(fitid);
+    res.json({ mensagem: "Compra apagada com sucesso", compra });
   } catch (err) {
     res.status(err.status || 500).json({ message: err.message });
   }
