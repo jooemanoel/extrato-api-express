@@ -1,7 +1,6 @@
 // api/modules/ofx/ofx.service.js
 
 import fs from "fs/promises";
-import { parse } from "ofx-js";
 import * as compraDAO from "../compras/compra.dao.js";
 
 /**
@@ -29,6 +28,9 @@ function valorParaCentavos(valor) {
 export async function parseOfx(filePath, codigo_usuario) {
   try {
     const text = await fs.readFile(filePath, "utf8");
+
+    // import dinâmico para evitar problemas ESM/CJS em runtime serverless
+    const { parse } = await import("ofx-js");
 
     // Parse do OFX pelo parser oficial
     const parsed = await parse(text);
