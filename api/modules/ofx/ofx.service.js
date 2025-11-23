@@ -33,6 +33,8 @@ export async function parseOfx(filePath, codigo_usuario) {
     // Parse do OFX pelo parser oficial
     const parsed = await parse(text);
 
+    console.log(JSON.stringify(parsed, null, 2));
+
     const lista =
       parsed?.OFX?.CREDITCARDMSGSRSV1?.CCSTMTTRNRS?.CCSTMTRS?.BANKTRANLIST?.STMTTRN || [];
 
