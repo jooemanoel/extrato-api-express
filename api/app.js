@@ -7,6 +7,7 @@ import rootRoutes from "./modules/root/root.routes.js";
 import compraRoutes from "./modules/compras/compra.routes.js";
 import faturaRoutes from "./modules/fatura/fatura.routes.js";
 import usuarioRoutes from "./modules/usuario/usuario.routes.js";
+import ofxRoutes from "./modules/ofx/ofx.routes.js";
 
 export function createApp() {
   const app = express();
