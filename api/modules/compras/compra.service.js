@@ -15,6 +15,10 @@ export const listarPorData = (codigo_usuario, { data_abertura_fatura, data_fecha
   return compraDAO.listarPorData(codigo_usuario, data_abertura_fatura, data_fechamento_fatura);
 };
 
+export const listarPorFatura = (codigo_usuario, { codigo_fatura }) => {
+  return compraDAO.listarPorFatura(codigo_usuario, codigo_fatura);
+};
+
 export const inserir = ({
   fitid,
   trntype,
@@ -22,6 +26,7 @@ export const inserir = ({
   data_compra,
   valor_compra,
   codigo_categoria_compra,
+  codigo_fatura,
   codigo_usuario
 }) => {
 
@@ -38,12 +43,13 @@ export const inserir = ({
     data_compra,
     valor_compra,
     codigo_categoria_compra,
+    codigo_fatura,
     codigo_usuario
   });
 };
 
 export const editar = async (fitid, dados) => {
-  const { descricao_compra, data_compra, valor_compra, codigo_categoria_compra } = dados;
+  const { descricao_compra, data_compra, valor_compra, codigo_categoria_compra, codigo_fatura } = dados;
 
   if (!descricao_compra || !data_compra || !valor_compra) {
     const error = new Error("Campos obrigatórios não informados");
@@ -55,7 +61,8 @@ export const editar = async (fitid, dados) => {
     descricao_compra,
     data_compra,
     valor_compra,
-    codigo_categoria_compra
+    codigo_categoria_compra,
+    codigo_fatura
   });
 
   if (!compra) {

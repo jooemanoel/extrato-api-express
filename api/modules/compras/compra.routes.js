@@ -18,6 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/por-data", async (req, res) => {
+  console.log("compra.routes - POST /por-data", req.body);
   try {
     const codigo_usuario = req.usuario.codigo_usuario;
     const compras = await compraService.listarPorData(
@@ -30,7 +31,22 @@ router.post("/por-data", async (req, res) => {
   }
 });
 
+router.post("/por-fatura", async (req, res) => {
+  console.log("compra.routes - POST /por-fatura", req.body);
+  try {
+    const codigo_usuario = req.usuario.codigo_usuario;
+    const compras = await compraService.listarPorFatura(
+      codigo_usuario, 
+      req.body
+    );
+    res.json(compras);
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message });
+  }
+});
+
 router.post("/", async (req, res) => {
+  console.log("compra.routes - POST", req.body);
   try {
     const codigo_usuario = req.usuario.codigo_usuario;
     const compra = await compraService.inserir({
@@ -44,6 +60,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:fitid", async (req, res) => {
+  console.log("compra.routes - PUT", req.params.fitid, req.body);
   try {
     const fitid = req.params.fitid;
     const compra = await compraService.editar(fitid, req.body);
@@ -54,6 +71,7 @@ router.put("/:fitid", async (req, res) => {
 });
 
 router.delete("/:fitid", async (req, res) => {
+  console.log("compra.routes - DELETE", req.params.fitid);
   try {
     const fitid = req.params.fitid;
     const compra = await compraService.apagar(fitid);
