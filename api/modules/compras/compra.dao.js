@@ -38,6 +38,7 @@ export const inserir = async ({
   data_compra,
   valor_compra,
   codigo_categoria_compra,
+  codigo_fatura,
   codigo_usuario
 }) => {
   const [compra] = await sql`
