@@ -31,7 +31,7 @@ export const listarPorFatura = async (codigo_usuario, codigo_fatura) => {
   `;
 };
 
-export const inserir = async ({
+export const inserir = async ({ 
   fitid,
   trntype,
   descricao_compra,
@@ -54,12 +54,13 @@ export const inserir = async ({
       ${codigo_fatura},
       ${codigo_usuario}
     )
-    ON CONFLICT (fitid) DO NOTHING
+    ON CONFLICT (fitid, descricao_compra) DO NOTHING
     RETURNING fitid;
   `;
   console.log('compra.dao - inserir', compra);
   return compra;
 };
+
 
 export const editar = async (fitid, {
   descricao_compra,
