@@ -11,7 +11,11 @@ export const listar = async (codigo_usuario) => {
   `;
 };
 
-export const listarPorData = async (codigo_usuario, data_abertura_fatura, data_fechamento_fatura) => {
+export const listarPorData = async (
+  codigo_usuario,
+  data_abertura_fatura,
+  data_fechamento_fatura
+) => {
   return await sql`
     SELECT fitid, trntype, descricao_compra, data_compra, valor_compra, codigo_categoria_compra, codigo_fatura
     FROM public.compra
@@ -31,7 +35,7 @@ export const listarPorFatura = async (codigo_usuario, codigo_fatura) => {
   `;
 };
 
-export const inserir = async ({ 
+export const inserir = async ({
   fitid,
   trntype,
   descricao_compra,
@@ -39,7 +43,7 @@ export const inserir = async ({
   valor_compra,
   codigo_categoria_compra,
   codigo_fatura,
-  codigo_usuario
+  codigo_usuario,
 }) => {
   const [compra] = await sql`
     INSERT INTO public.compra
@@ -57,18 +61,51 @@ export const inserir = async ({
     ON CONFLICT (fitid, descricao_compra) DO NOTHING
     RETURNING fitid;
   `;
-  console.log('compra.dao - inserir', compra);
+  console.log("compra.dao - inserir", compra);
   return compra;
 };
 
+export const inserirEmLote = async (compras) => {
+  const resultados = await sql`
+    INSERT INTO public.compra (
+      fitid,
+      trntype,
+      descricao_compra,
+      data_compra,
+      valor_compra,
+      codigo_categoria_compra,
+      codigo_fatura,
+      codigo_usuario
+    ) VALUES ${sql(
+      compras.map((c) => [
+        c.fitid,
+        c.trntype,
+        c.descricao_compra,
+        c.data_compra,
+        c.valor_compra,
+        c.codigo_categoria_compra,
+        c.codigo_fatura,
+        c.codigo_usuario,
+      ])
+    )}
+    ON CONFLICT (fitid, descricao_compra) DO NOTHING
+    RETURNING fitid;
+  `;
 
-export const editar = async (fitid, {
-  descricao_compra,
-  data_compra,
-  valor_compra,
-  codigo_categoria_compra,
-  codigo_fatura
-}) => {
+  console.log("compra.dao - inserir em lote", resultados);
+  return resultados;
+};
+
+export const editar = async (
+  fitid,
+  {
+    descricao_compra,
+    data_compra,
+    valor_compra,
+    codigo_categoria_compra,
+    codigo_fatura,
+  }
+) => {
   const [compra] = await sql`
     UPDATE public.compra
     SET descricao_compra = ${descricao_compra},
@@ -79,7 +116,7 @@ export const editar = async (fitid, {
     WHERE fitid = ${fitid}
     RETURNING fitid, trntype, descricao_compra, data_compra, valor_compra, codigo_categoria_compra, codigo_fatura;
   `;
-  console.log('compra.dao - editar', compra);
+  console.log("compra.dao - editar", compra);
   return compra;
 };
 
@@ -89,6 +126,16 @@ export const apagar = async (fitid) => {
     WHERE fitid = ${fitid}
     RETURNING fitid, descricao_compra;
   `;
-  console.log('compra.dao - apagar', compra);
+  console.log("compra.dao - apagar", compra);
   return compra;
+};
+
+export const apagarPorFatura = async (codigo_fatura) => {
+  const compras = await sql`
+    DELETE FROM public.compra
+    WHERE codigo_fatura = ${codigo_fatura}
+    RETURNING fitid, descricao_compra;
+  `;
+  console.log(`compra.dao - apagar por fatura ${codigo_fatura}`, compras);
+  return compras;
 };

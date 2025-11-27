@@ -21,10 +21,7 @@ router.post("/por-data", async (req, res) => {
   console.log("compra.routes - POST /por-data", req.body);
   try {
     const codigo_usuario = req.usuario.codigo_usuario;
-    const compras = await compraService.listarPorData(
-      codigo_usuario, 
-      req.body
-    );
+    const compras = await compraService.listarPorData(codigo_usuario, req.body);
     res.json(compras);
   } catch (err) {
     res.status(err.status || 500).json({ message: err.message });
@@ -36,7 +33,7 @@ router.post("/por-fatura", async (req, res) => {
   try {
     const codigo_usuario = req.usuario.codigo_usuario;
     const compras = await compraService.listarPorFatura(
-      codigo_usuario, 
+      codigo_usuario,
       req.body
     );
     res.json(compras);
@@ -53,6 +50,17 @@ router.post("/", async (req, res) => {
       ...req.body,
       codigo_usuario,
     });
+    res.status(201).json(compra);
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message });
+  }
+});
+
+router.post("/em-lote", async (req, res) => {
+  console.log("compra.routes - POST em lote");
+  try {
+    const codigo_usuario = req.usuario.codigo_usuario;
+    const compra = await compraService.inserirEmLote(codigo_usuario, req.body);
     res.status(201).json(compra);
   } catch (err) {
     res.status(err.status || 500).json({ message: err.message });
@@ -76,6 +84,17 @@ router.delete("/:fitid", async (req, res) => {
     const fitid = req.params.fitid;
     const compra = await compraService.apagar(fitid);
     res.json({ mensagem: "Compra apagada com sucesso", compra });
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message });
+  }
+});
+
+router.delete("/fatura/:codigo_fatura", async (req, res) => {
+  console.log("compra.routes - DELETE fatura", req.params.codigo_fatura);
+  try {
+    const codigo_fatura = req.params.codigo_fatura;
+    const compras = await compraService.apagarPorFatura(codigo_fatura);
+    res.json({ mensagem: "Compras apagadas com sucesso", compras });
   } catch (err) {
     res.status(err.status || 500).json({ message: err.message });
   }
